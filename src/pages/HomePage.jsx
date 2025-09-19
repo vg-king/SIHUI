@@ -19,7 +19,7 @@ const HomePage = ({ currentLanguage }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex-1"
+      className="h-full overflow-y-auto mobile-scroll"
     >
       <WelcomeScreen 
         onGetStarted={handleGetStarted}

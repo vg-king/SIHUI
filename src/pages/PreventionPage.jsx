@@ -92,7 +92,7 @@ const PreventionPage = ({ currentLanguage }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex-1 overflow-y-auto p-8 space-y-8 bg-gradient-to-br from-slate-50 to-white scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
+      className="h-full overflow-y-auto mobile-scroll p-4 sm:p-8 space-y-8 bg-gradient-to-br from-slate-50 to-white scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
     >
       {/* Header */}
       <motion.div

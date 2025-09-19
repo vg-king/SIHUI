@@ -198,7 +198,7 @@ const ChatInterface = ({ messages, isTyping }) => {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-4 sm:space-y-8 bg-gradient-to-b from-slate-50 to-white scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100 min-h-0">
+    <div className="flex-1 overflow-y-scroll p-3 sm:p-6 space-y-4 sm:space-y-8 bg-gradient-to-b from-slate-50 to-white scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100 min-h-0 mobile-scroll overscroll-contain">
       <AnimatePresence>
         {messages.map((message, index) => (
           <MessageBubble key={message.id} message={message} index={index} />

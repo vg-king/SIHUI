@@ -15,7 +15,7 @@ const SuggestionsPage = ({ currentLanguage }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
+      className="h-full overflow-y-auto mobile-scroll scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
     >
       <QuickSuggestions 
         onSuggestionClick={handleSuggestionClick}

@@ -161,12 +161,12 @@ const WelcomeScreen = ({ onGetStarted, currentLanguage = 'en' }) => {
 
   return (
     <motion.div
-      className="flex-1 overflow-y-auto bg-gradient-to-br from-slate-50 via-white to-blue-50"
+      className="bg-gradient-to-br from-slate-50 via-white to-blue-50"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <div className="max-w-6xl mx-auto p-4 sm:p-6 md:p-12 space-y-8 md:space-y-16">
+      <div className="max-w-6xl mx-auto p-4 sm:p-6 md:p-12 space-y-8 md:space-y-16 pb-16">
         
         {/* Header Section */}
         <motion.div variants={itemVariants} className="text-center space-y-8">
