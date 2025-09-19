@@ -473,20 +473,20 @@ const Sidebar = ({ isCollapsed, onToggle, currentLanguage, onLanguageChange, chi
               transition={{ delay: 0.2 }}
               className="mt-8"
             >
-              <Card className="p-4 bg-gradient-to-br from-navy-900/50 to-purple-900/30 border-navy-700/50">
+              <Card className="p-4 bg-white border border-slate-200 shadow-lg">
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="p-2 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-lg">
-                    <Globe className="w-4 h-4 text-blue-400" />
+                  <div className="p-2 bg-gradient-to-br from-emerald-600/20 to-teal-600/20 rounded-lg">
+                    <Globe className="w-4 h-4 text-emerald-600" />
                   </div>
-                  <span className="text-sm font-semibold text-navy-200">Language</span>
+                  <span className="text-sm font-semibold text-slate-700">Language</span>
                 </div>
                 <select
                   value={currentLanguage}
                   onChange={(e) => onLanguageChange(e.target.value)}
-                  className="w-full p-3 text-sm bg-navy-800/50 border border-navy-600/50 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-transparent text-navy-100 hover:bg-navy-700/50 transition-colors"
+                  className="w-full p-3 text-sm bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-300 text-slate-700 hover:bg-slate-50 transition-all duration-200"
                 >
                   {languages.map((lang) => (
-                    <option key={lang.code} value={lang.code} className="bg-navy-800 text-navy-100">
+                    <option key={lang.code} value={lang.code} className="bg-white text-slate-700">
                       {lang.flag} {lang.native}
                     </option>
                   ))}
