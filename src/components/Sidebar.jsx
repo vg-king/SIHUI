@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
@@ -14,18 +14,31 @@ import {
   Sparkles,
   Users,
   Zap,
-  Home
+  Home,
+  X
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { cn } from '../lib/utils';
 import { useTheme } from '../hooks/useUtils';
 
-const Sidebar = ({ isCollapsed, onToggle, currentLanguage, onLanguageChange, children }) => {
+const Sidebar = ({ isCollapsed, onToggle, currentLanguage, onLanguageChange, children, isMobileOpen, onMobileClose }) => {
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const { theme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const getActiveSection = () => {
     const path = location.pathname;
@@ -47,6 +60,54 @@ const Sidebar = ({ isCollapsed, onToggle, currentLanguage, onLanguageChange, chi
     collapsed: { 
       width: '80px',
       transition: { duration: 0.3, ease: "easeInOut" }
+    }
+  };
+
+  const mobileOverlayVariants = {
+    hidden: { 
+      opacity: 0,
+      transition: { 
+        duration: 0.2,
+        ease: "easeInOut"
+      }
+    },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        duration: 0.3,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const mobileSidebarVariants = {
+    hidden: { 
+      x: '-100%',
+      transition: { 
+        duration: 0.3, 
+        ease: "easeInOut",
+        when: "afterChildren"
+      }
+    },
+    visible: { 
+      x: '0%',
+      transition: { 
+        duration: 0.4, 
+        ease: [0.25, 0.46, 0.45, 0.94],
+        when: "beforeChildren",
+        staggerChildren: 0.05
+      }
+    }
+  };
+
+  const handleNavigate = (path) => {
+    navigate(path);
+    // Only close mobile menu after navigation starts
+    if (isMobile && isMobileOpen) {
+      // Small delay to ensure navigation happens first
+      setTimeout(() => {
+        onMobileClose();
+      }, 100);
     }
   };
 
@@ -112,9 +173,152 @@ const Sidebar = ({ isCollapsed, onToggle, currentLanguage, onLanguageChange, chi
     active: { scale: 1.05, rotate: 0 }
   };
 
+  // Mobile Overlay Component
+  if (isMobile) {
+    return (
+      <>
+        {/* Mobile Backdrop */}
+        <AnimatePresence>
+          {isMobileOpen && (
+            <motion.div
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
+              variants={mobileOverlayVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onMobileClose();
+              }}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Mobile Sidebar */}
+        <AnimatePresence>
+          {isMobileOpen && (
+            <motion.div
+              className="fixed top-0 left-0 h-full w-80 bg-white/95 backdrop-blur-sm shadow-2xl flex flex-col z-50 md:hidden"
+              variants={mobileSidebarVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              style={{ willChange: 'transform' }}
+            >
+              {/* Mobile Header */}
+              <div className="relative z-10 p-6 border-b border-slate-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <motion.div 
+                      className="relative w-12 h-12 bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-700 rounded-xl flex items-center justify-center shadow-lg"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Bot className="w-6 h-6 text-white" />
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl"
+                        animate={{ opacity: [0.5, 0.8, 0.5] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                    </motion.div>
+                    <div>
+                      <h1 className="text-xl font-bold text-slate-800">Health AI</h1>
+                      <p className="text-xs text-slate-600 flex items-center space-x-1">
+                        <Sparkles className="w-3 h-3" />
+                        <span>AI-Powered Care</span>
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Close Button */}
+                  <motion.button
+                    onClick={onMobileClose}
+                    className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <X className="w-5 h-5 text-slate-600" />
+                  </motion.button>
+                </div>
+              </div>
+
+              {/* Mobile Navigation */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="mb-6">
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-2">
+                    Healthcare Modules
+                  </p>
+                </div>
+
+                <nav className="space-y-2">
+                  {menuItems.map((item, index) => (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + (index * 0.1), duration: 0.3 }}
+                    >
+                      <Button
+                        variant="ghost"
+                        onClick={() => handleNavigate(item.path)}
+                        className={cn(
+                          "w-full justify-start p-4 h-auto text-left transition-all duration-300 relative overflow-hidden group border-2 border-transparent",
+                          activeSection === item.id
+                            ? `${item.bgColor} border-slate-200 text-slate-800 shadow-md bg-gradient-to-r from-white to-slate-50`
+                            : `text-slate-600 hover:text-slate-800 ${item.hoverColor} hover:border-slate-200`
+                        )}
+                      >
+                        <div className="flex items-center space-x-4 relative z-10">
+                          <div className={cn(
+                            "p-2 rounded-lg transition-colors",
+                            activeSection === item.id ? item.bgColor : "group-hover:bg-slate-100"
+                          )}>
+                            <item.icon className={cn("w-5 h-5", item.color)} />
+                          </div>
+                          <div className="flex-1">
+                            <span className="font-medium">{item.label}</span>
+                          </div>
+                        </div>
+                      </Button>
+                    </motion.div>
+                  ))}
+                </nav>
+
+                {/* Mobile Language Selector */}
+                <div className="mt-8">
+                  <Card className="p-4 bg-gradient-to-br from-slate-50 to-white border-slate-200">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="p-2 bg-gradient-to-br from-emerald-600/20 to-teal-600/20 rounded-lg">
+                        <Globe className="w-4 h-4 text-emerald-600" />
+                      </div>
+                      <span className="text-sm font-semibold text-slate-700">Language</span>
+                    </div>
+                    <select
+                      value={currentLanguage}
+                      onChange={(e) => onLanguageChange(e.target.value)}
+                      className="w-full p-3 text-sm bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-slate-700 hover:bg-slate-50 transition-colors"
+                    >
+                      {languages.map((lang) => (
+                        <option key={lang.code} value={lang.code} className="bg-white text-slate-700">
+                          {lang.flag} {lang.native}
+                        </option>
+                      ))}
+                    </select>
+                  </Card>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </>
+    );
+  }
+
+  // Desktop Sidebar
   return (
     <motion.div
-      className="sticky top-0 left-0 bg-white/95 backdrop-blur-sm border-r border-slate-200 shadow-xl flex flex-col h-screen overflow-hidden z-50"
+      className="sticky top-0 left-0 bg-white/95 backdrop-blur-sm border-r border-slate-200 shadow-xl h-screen overflow-hidden z-40 hidden md:flex md:flex-col"
       initial="expanded"
       animate={isCollapsed ? "collapsed" : "expanded"}
       variants={sidebarVariants}
@@ -209,7 +413,7 @@ const Sidebar = ({ isCollapsed, onToggle, currentLanguage, onLanguageChange, chi
             >
               <Button
                 variant="ghost"
-                onClick={() => navigate(item.path)}
+                onClick={() => handleNavigate(item.path)}
                 onMouseEnter={() => setHoveredItem(item.id)}
                 onMouseLeave={() => setHoveredItem(null)}
                 className={cn(

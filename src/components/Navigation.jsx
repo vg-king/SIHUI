@@ -8,10 +8,13 @@ import {
   ArrowLeft,
   ArrowRight,
   RotateCcw,
-  ExternalLink
+  ExternalLink,
+  Bot,
+  Sparkles
 } from 'lucide-react';
+import MobileMenu from './MobileMenu';
 
-const Navigation = () => {
+const Navigation = ({ onMobileMenuToggle, isMobileMenuOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -57,8 +60,29 @@ const Navigation = () => {
       animate={{ opacity: 1, y: 0 }}
       className="flex items-center justify-between p-4 bg-white/95 backdrop-blur-sm border-b border-slate-200 shadow-sm"
     >
-      {/* Left Navigation Controls */}
-      <div className="flex items-center space-x-2">
+      {/* Mobile Menu Button - Only visible on mobile */}
+      <div className="md:hidden">
+        <MobileMenu 
+          isOpen={isMobileMenuOpen} 
+          onToggle={onMobileMenuToggle}
+        />
+      </div>
+
+      {/* Mobile Header - Center logo and title */}
+      <div className="md:hidden flex-1 flex items-center justify-center space-x-3">
+        <motion.div 
+          className="w-8 h-8 bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-700 rounded-lg flex items-center justify-center shadow-md"
+          whileHover={{ scale: 1.1 }}
+        >
+          <Bot className="w-4 h-4 text-white" />
+        </motion.div>
+        <div>
+          <h1 className="text-lg font-bold text-slate-800">Health AI</h1>
+        </div>
+      </div>
+
+      {/* Desktop Navigation - Hidden on mobile */}
+      <div className="hidden md:flex items-center space-x-2">
         <motion.button
           onClick={handleBack}
           className="p-2 rounded-lg hover:bg-slate-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -90,8 +114,8 @@ const Navigation = () => {
         </motion.button>
       </div>
 
-      {/* Center - Current Page Title */}
-      <div className="flex-1 text-center">
+      {/* Center - Current Page Title (Desktop only) */}
+      <div className="hidden md:block flex-1 text-center">
         <motion.h1
           key={currentPath}
           initial={{ opacity: 0, y: 10 }}
@@ -110,8 +134,8 @@ const Navigation = () => {
         </motion.p>
       </div>
 
-      {/* Right Navigation Controls */}
-      <div className="flex items-center space-x-2">
+      {/* Right Navigation Controls (Desktop only) */}
+      <div className="hidden md:flex items-center space-x-2">
         <motion.button
           onClick={handleHome}
           className="p-2 rounded-lg hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
@@ -132,6 +156,9 @@ const Navigation = () => {
           <ExternalLink className="w-4 h-4 text-slate-600" />
         </motion.button>
       </div>
+
+      {/* Mobile placeholder for right side */}
+      <div className="md:hidden w-12"></div>
     </motion.div>
   );
 };

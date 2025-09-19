@@ -166,7 +166,7 @@ const WelcomeScreen = ({ onGetStarted, currentLanguage = 'en' }) => {
       initial="hidden"
       animate="visible"
     >
-      <div className="max-w-6xl mx-auto p-6 md:p-12 space-y-16">
+      <div className="max-w-6xl mx-auto p-4 sm:p-6 md:p-12 space-y-8 md:space-y-16">
         
         {/* Header Section */}
         <motion.div variants={itemVariants} className="text-center space-y-8">
@@ -185,14 +185,14 @@ const WelcomeScreen = ({ onGetStarted, currentLanguage = 'en' }) => {
           
           <div className="space-y-6">
             <motion.h1 
-              className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-slate-800 via-slate-700 to-emerald-800 bg-clip-text text-transparent leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-slate-800 via-slate-700 to-emerald-800 bg-clip-text text-transparent leading-tight"
               variants={itemVariants}
             >
               {content.greeting}
             </motion.h1>
             
             <motion.p 
-              className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed"
+              className="text-lg sm:text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed px-4 sm:px-0"
               variants={itemVariants}
             >
               {content.subtitle}
@@ -214,25 +214,25 @@ const WelcomeScreen = ({ onGetStarted, currentLanguage = 'en' }) => {
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">Comprehensive healthcare support designed for everyone</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             {content.features.map((feature, index) => (
               <motion.div
                 key={index}
                 variants={featureVariants}
                 whileHover={{ scale: 1.03, y: -5 }}
-                className="group bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-200/50 shadow-lg hover:shadow-2xl transition-all duration-500 hover:border-emerald-200"
+                className="group bg-white/80 backdrop-blur-sm p-4 md:p-8 rounded-xl md:rounded-2xl border border-slate-200/50 shadow-lg hover:shadow-2xl transition-all duration-500 hover:border-emerald-200"
               >
-                <div className="flex items-start space-x-6">
+                <div className="flex items-start space-x-4 md:space-x-6">
                   <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl flex items-center justify-center group-hover:from-emerald-100 group-hover:to-emerald-200 transition-all duration-300">
-                      <feature.icon className="w-8 h-8 text-emerald-600 group-hover:text-emerald-700 transition-colors" />
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl md:rounded-2xl flex items-center justify-center group-hover:from-emerald-100 group-hover:to-emerald-200 transition-all duration-300">
+                      <feature.icon className="w-6 h-6 md:w-8 md:h-8 text-emerald-600" />
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-emerald-800 transition-colors">
+                    <h3 className="text-lg md:text-xl font-bold text-slate-800 mb-2 md:mb-3 group-hover:text-emerald-800 transition-colors">
                       {feature.title}
                     </h3>
-                    <p className="text-slate-600 leading-relaxed text-base">
+                    <p className="text-sm md:text-base text-slate-600 leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
