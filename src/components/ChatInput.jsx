@@ -79,7 +79,7 @@ const ChatInput = ({ onSendMessage, isTyping, disabled }) => {
   };
 
   return (
-    <div className="border-t border-slate-200 bg-white/95 backdrop-blur-sm p-6">
+    <div className="border-t border-slate-200 bg-white/95 backdrop-blur-sm p-3 sm:p-6 pb-safe-area-inset-bottom">
       {/* Attached Files Preview */}
       {attachedFiles.length > 0 && (
         <motion.div 
@@ -116,12 +116,12 @@ const ChatInput = ({ onSendMessage, isTyping, disabled }) => {
       )}
 
       {/* Main Input Area */}
-      <div className="flex items-end space-x-4">
+      <div className="flex items-end space-x-2 sm:space-x-4">
         {/* Attachment Menu */}
         <div className="relative">
           <button
             onClick={() => setShowFileMenu(!showFileMenu)}
-            className="p-3 rounded-xl border-2 border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200"
+            className="p-2 sm:p-3 rounded-xl border-2 border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 flex-shrink-0"
             disabled={disabled}
           >
             <Paperclip className="w-5 h-5 text-slate-600" />
@@ -181,11 +181,11 @@ const ChatInput = ({ onSendMessage, isTyping, disabled }) => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask me anything about healthcare, symptoms, or vaccination…"
+            placeholder="Ask me anything about healthcare…"
             disabled={disabled}
-            className="w-full p-4 pr-14 border-2 border-slate-200 rounded-xl resize-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-400 disabled:bg-slate-50 disabled:text-slate-400 placeholder-slate-500 text-slate-700 font-medium transition-all duration-200"
+            className="w-full p-3 sm:p-4 pr-12 sm:pr-14 border-2 border-slate-200 rounded-xl resize-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-400 disabled:bg-slate-50 disabled:text-slate-400 placeholder-slate-500 text-slate-700 font-medium transition-all duration-200 text-sm sm:text-base"
             rows={message.split('\n').length || 1}
-            style={{ minHeight: '56px', maxHeight: '140px' }}
+            style={{ minHeight: '44px', maxHeight: '120px' }}
           />
           
           {/* Character counter for long messages */}
@@ -200,16 +200,16 @@ const ChatInput = ({ onSendMessage, isTyping, disabled }) => {
         <button
           onClick={toggleRecording}
           disabled={disabled}
-          className={`p-3 rounded-xl border-2 transition-all duration-200 ${
+          className={`p-2 sm:p-3 rounded-xl border-2 transition-all duration-200 flex-shrink-0 ${
             isRecording
               ? 'bg-red-50 border-red-300 text-red-600 animate-pulse shadow-lg'
               : 'border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-600'
           }`}
         >
           {isRecording ? (
-            <MicOff className="w-5 h-5" />
+            <MicOff className="w-4 h-4 sm:w-5 sm:h-5" />
           ) : (
-            <Mic className="w-5 h-5" />
+            <Mic className="w-4 h-4 sm:w-5 sm:h-5" />
           )}
         </button>
 
@@ -217,7 +217,7 @@ const ChatInput = ({ onSendMessage, isTyping, disabled }) => {
         <motion.button
           onClick={handleSend}
           disabled={disabled || (!message.trim() && attachedFiles.length === 0)}
-          className={`p-3 rounded-xl transition-all duration-200 ${
+          className={`p-2 sm:p-3 rounded-xl transition-all duration-200 flex-shrink-0 ${
             disabled || (!message.trim() && attachedFiles.length === 0)
               ? 'bg-slate-100 text-slate-400 cursor-not-allowed border-2 border-slate-200'
               : 'bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-lg hover:shadow-xl border-2 border-emerald-600'
@@ -225,7 +225,7 @@ const ChatInput = ({ onSendMessage, isTyping, disabled }) => {
           whileHover={!disabled && (message.trim() || attachedFiles.length > 0) ? { scale: 1.05, y: -1 } : {}}
           whileTap={!disabled && (message.trim() || attachedFiles.length > 0) ? { scale: 0.95 } : {}}
         >
-          <Send className="w-5 h-5" />
+          <Send className="w-4 h-4 sm:w-5 sm:h-5" />
         </motion.button>
       </div>
 

@@ -171,13 +171,15 @@ I'm connected to government health databases to provide you with the most curren
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="flex-1 flex flex-col min-h-0"
+      className="flex-1 flex flex-col h-full min-h-0 bg-white md:bg-gradient-to-br md:from-slate-50 md:via-white md:to-blue-50"
     >
-      <ChatInterface 
-        messages={messages}
-        isTyping={isTyping}
-      />
-      <div className="border-t border-slate-200">
+      <div className="flex-1 min-h-0 overflow-hidden">
+        <ChatInterface 
+          messages={messages}
+          isTyping={isTyping}
+        />
+      </div>
+      <div className="flex-shrink-0 border-t border-slate-200 bg-white">
         <ChatInput
           onSendMessage={handleSendMessage}
           isTyping={isTyping}

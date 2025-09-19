@@ -64,7 +64,7 @@ function App() {
           />
         </div>
 
-        <div className="flex h-screen">
+        <div className="flex h-screen max-h-screen overflow-hidden">
           {/* Sidebar */}
           <Sidebar
             isCollapsed={isSidebarCollapsed}
@@ -76,7 +76,7 @@ function App() {
           />
 
           {/* Main Content Area */}
-          <div className="flex-1 flex flex-col h-screen w-full md:w-auto overflow-hidden">
+          <div className="flex-1 flex flex-col h-full min-h-0 w-full md:w-auto overflow-hidden relative z-10">
             {/* Navigation Bar */}
             <Navigation 
               onMobileMenuToggle={handleMobileMenuToggle}
@@ -84,14 +84,14 @@ function App() {
             />
             
             {/* Page Content */}
-            <main className="flex-1 bg-gradient-to-br from-slate-50 via-white to-blue-50 md:border-l border-slate-200 overflow-y-auto overflow-x-hidden">
+            <main className="flex-1 bg-gradient-to-br from-slate-50 via-white to-blue-50 md:border-l border-slate-200 overflow-hidden min-h-0">
               <Routes>
                 <Route path="/" element={<HomePage currentLanguage={currentLanguage} />} />
                 <Route path="/chat" element={<ChatPage currentLanguage={currentLanguage} />} />
                 <Route path="/suggestions" element={<SuggestionsPage currentLanguage={currentLanguage} />} />
                 <Route path="/prevention" element={<PreventionPage currentLanguage={currentLanguage} />} />
                 <Route path="/symptoms" element={
-                  <div className="p-4 md:p-8 text-center text-slate-600">
+                  <div className="p-4 md:p-8 text-center text-slate-600 h-full flex items-center justify-center">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -103,7 +103,7 @@ function App() {
                   </div>
                 } />
                 <Route path="/vaccination" element={
-                  <div className="p-4 md:p-8 text-center text-slate-600">
+                  <div className="p-4 md:p-8 text-center text-slate-600 h-full flex items-center justify-center">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
